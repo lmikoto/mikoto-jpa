@@ -10,7 +10,7 @@
 <dependency>
     <groupId>io.github.lmikoto</groupId>
     <artifactId>mikoto-jpa</artifactId>
-    <version>1.0.0.RELEASE</version>
+    <version>1.2.1.RELEASE</version>
 </dependency>
 ```
 ### 初始化
@@ -70,6 +70,8 @@ public enum QueryType {
 ```
 
 ## 更新日志
+### 1.2.1.RELEASE
+- 提供分页支持
 ### 1.1.1.RELEASE
 - 提供使用文档
 ### 1.1.0.RELEASE

@@ -1,10 +1,9 @@
 package io.github.lmikoto.jpa.query;
 
-import io.github.lmikoto.jpa.support.DataQueryObject;
-import io.github.lmikoto.jpa.support.QueryBetween;
-import io.github.lmikoto.jpa.support.QueryField;
-import io.github.lmikoto.jpa.support.QueryType;
-import org.springframework.data.jpa.domain.Specification;
+import io.github.lmikoto.jpa.support.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.support.JpaEntityInformation;
 import org.springframework.data.jpa.repository.support.SimpleJpaRepository;
@@ -19,28 +18,42 @@ import java.util.Objects;
 
 public class BaseRepositoryImpl <T,ID> extends SimpleJpaRepository<T,ID> implements  BaseRepository<T,ID>, JpaSpecificationExecutor<T> {
 
-
-    private final EntityManager entityManager;
-
     private final BaseRepositoryImpl example;
 
     public BaseRepositoryImpl(JpaEntityInformation<T, ID> entityInformation, EntityManager em) {
         super(entityInformation, em);
-        this.entityManager = em;
         example = this;
     }
 
     @Override
     public List<T> findAll(final DataQueryObject queryObject) {
-        return this.findAll(new Specification<T>() {
-            @Override
-            public Predicate toPredicate(Root<T> root, CriteriaQuery<?> criteriaQuery, CriteriaBuilder criteriaBuilder) {
-                return example.getPredocate(root, criteriaQuery, criteriaBuilder, queryObject);
-            }
+        return this.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            return example.getPredicate(root, criteriaQuery, criteriaBuilder, queryObject);
         });
     }
 
-    protected Predicate getPredocate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb,
+    @Override
+    public List<T> findAll(DataQueryObject queryObject, Sort sort) {
+        return this.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            return example.getPredicate(root, criteriaQuery, criteriaBuilder, queryObject);
+        },sort);
+    }
+
+    @Override
+    public Page<T> findAll(PageDateQueryObject queryObject) {
+        return this.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            return example.getPredicate(root, criteriaQuery, criteriaBuilder, queryObject);
+        },PageRequest.of(queryObject.getPage(),queryObject.getSize()));
+    }
+
+    @Override
+    public Page<T> findAll(PageDateQueryObject queryObject, Sort sort) {
+        return this.findAll((root, criteriaQuery, criteriaBuilder) -> {
+            return example.getPredicate(root, criteriaQuery, criteriaBuilder, queryObject);
+        },PageRequest.of(queryObject.getPage(),queryObject.getSize(),sort));
+    }
+
+    protected Predicate getPredicate(Root<T> root, CriteriaQuery<?> query, CriteriaBuilder cb,
                                      DataQueryObject dataQueryObject) {
         List<Predicate> predicates = new ArrayList<>();
         Field[] fields = dataQueryObject.getClass().getDeclaredFields();
