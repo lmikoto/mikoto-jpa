@@ -2,6 +2,7 @@
 
 ## 项目介绍
 为简化`spring-data-jpa`动态查询而定义的一套注解。
+可以在不写sql的情况下使用jpa的动态查询。
 ## 使用文档
 ### 安装
 通过maven引入
@@ -69,9 +70,12 @@ public enum QueryType {
 ```
 
 ## 更新日志
-
+### 1.1.1.RELEASE
+- 提供使用文档
+### 1.1.0.RELEASE
+- 提供全部常用类型支持
 ### 1.0.0.RELEASE
-- 提供基本的动态查询类型
+- 提供常用的 EQUAL、BETWEEN、FULL_LIKE、IN支持
 
 ## todo
 - 分页支持
