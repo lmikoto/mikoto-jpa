@@ -9,7 +9,13 @@ import java.lang.annotation.Target;
 @Target({ElementType.FIELD})
 public @interface QueryField {
 
+    /**
+     * 搜索类型
+     */
     QueryType type();
 
+    /**
+     * 搜索的字段名，默认为搜索对象的属性名
+     */
     String name() default "";
 }
