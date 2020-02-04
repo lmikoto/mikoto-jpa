@@ -79,5 +79,3 @@ public enum QueryType {
 ### 1.0.0.RELEASE
 - 提供常用的 EQUAL、BETWEEN、FULL_LIKE、IN支持
 
-## todo
-- 分页支持
