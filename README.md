@@ -31,7 +31,7 @@ public class JpaConfig {
 public interface UserRepository extends BaseRepository<UserEntity,Long> {
 }
 ```
-搜索对象
+创建搜索对象，继承自 `DataQueryObject`
 ```java
 @Data
 public class UserSO extends DataQueryObject {
@@ -43,6 +43,11 @@ public class UserSO extends DataQueryObject {
     // 搜索db中age in ages
     @QueryField(type = QueryType.IN,name = "age")
     private List<Integer> ages;
+
+    // 查询db中 createAt在 createAtBetween之间的值
+    @QueryField(type = QueryType.BETWEEN,name = "createAt")
+    private QueryBetween<Date> createAtBetween;
+
 }
 ```
 进行搜索
