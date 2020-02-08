@@ -10,21 +10,11 @@
 <dependency>
     <groupId>io.github.lmikoto</groupId>
     <artifactId>mikoto-jpa</artifactId>
-    <version>1.2.1.RELEASE</version>
+    <version>1.2.2.RELEASE</version>
 </dependency>
 ```
 ### 初始化
-新建一个配置类
-```java
-import io.github.lmikoto.jpa.query.BaseRepositoryFactoryBean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-
-@Configuration
-@EnableJpaRepositories(repositoryFactoryBeanClass = BaseRepositoryFactoryBean.class)
-public class JpaConfig {
-}
-```
+在启动类上加上`@EnableMikotoJpa`注解
 ### 使用
 创建接口继承`BaseRepository`
 ```java
@@ -75,6 +65,8 @@ public enum QueryType {
 ```
 
 ## 更新日志
+### 1.2.2.RELEASE
+- 提供使用注解配置启动
 ### 1.2.1.RELEASE
 - 提供分页支持
 ### 1.1.1.RELEASE
